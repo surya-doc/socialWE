@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function Requests() {
@@ -22,25 +21,14 @@ function Requests() {
     ])
 
     const navigate = useNavigate();
-    useEffect(() => {
-        const getFriends = async() => {
-            console.log("kbeeeeeeeeeeafsj");
-            const user_data = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
-            // setFriends(user_data.id);
-            // console.log(user_data.id);
-            const tot = await axios.post('http://localhost:5000/request', {userId: user_data.id});
-            setFriends(tot.data);
-            console.log("*&&&&&&&&&&&&&&", tot);
-        }
-        getFriends();
-    }, [])
+
   return (
       <div>
         <div className='friends flex w-2/5 justify-between mx-auto md:w-3/5 sm:w-4/5 sm:gap-2'>
             {
                 friends ? friends.map((ele, i) => (
                     <div className='flex flex-col'>
-                        <img className='w-20 h-20 rounded-full sm:w-16 sm:h-16' src={ele.profile_pic} alt="" />
+                        <img className='w-20 h-20 rounded-full sm:w-16 sm:h-16' src={ele.img} alt="" />
                         <p className='text-lg font-light'>{ele.name}</p>
                     </div>
                         

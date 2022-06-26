@@ -1,6 +1,4 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useState } from 'react'
 import Header from '../Header/Header'
 
 function FriendList() {
@@ -30,19 +28,6 @@ function FriendList() {
             img: "https://img.freepik.com/free-photo/photo-young-attractive-man-blanc-t-shirt-cheerful-looks-camera-stands-pink-background-smiles_295783-3306.jpg?t=st=1654175953~exp=1654176553~hmac=2d8515ebe2ee3b874cc32f36e3bbcdb4f95191374e2870eef57e48657e5a3ed7&w=740"
         }
     ])
-    const {id} = useParams();
-    useEffect(() => {
-        const getFriends = async() => {
-            console.log("kbeeeeeeeeeeafsj");
-            const user_data = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
-            // setFriends(user_data.id);
-            // console.log(user_data.id);
-            const tot = await axios.post('http://localhost:5000/allies', {userId: user_data.id});
-            setFriends(tot.data);
-            console.log("*&&&&&&&&&&&&&&", tot);
-        }
-        getFriends();
-    }, [])
   return (
       <div>
             <Header />
@@ -52,7 +37,7 @@ function FriendList() {
                 friends.map((friend) => (
                     <div className='flex justify-between items-center my-8'>
                         <div className='flex items-center gap-4 text-lg font-thin'>
-                            <img className='w-16 h-16' style={{borderRadius: "50%"}} src={friend.profile_pic} alt="" />
+                            <img className='w-16 h-16' style={{borderRadius: "50%"}} src={friend.img} alt="" />
                             <h2>{friend.name}</h2>
                         </div>
                         <button className='flex items-center gap-2 border-2 p-1 rounded-sm text-lg font-thin'><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#A4A7A6" stroke-width="2">

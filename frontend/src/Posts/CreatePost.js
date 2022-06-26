@@ -3,15 +3,14 @@ import ImageUploader from 'react-image-upload';
 import 'react-image-upload/dist/index.css';
 import { useNavigate } from 'react-router-dom';
 import './Post.css';
-import FileBase from "react-file-base64";
 
 function CreatePost(props) {
     const[val, setVal] = useState(false);
-    const[post_img, setPost_img] = useState("");
+    const[post_img, setPost_img] = useState();
     const[post_body, setPost_body] = useState();
     function getImageFileObject(imageFile) {
         console.log({ imageFile })
-        // setPost_img(imageFile)
+        setPost_img({imageFile})
     }
     function runAfterImageDelete(file) {
         console.log({ file })
@@ -19,13 +18,9 @@ function CreatePost(props) {
 
     function createPost(event){
         event.preventDefault();
-        const user_data = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
-        console.log("***********************************************************************************", post_img);
         const postData = {
-            userId: user_data.id,
-            postReact: 0,
-            postPhoto: post_img,
-            postText: post_body,
+            post_img,
+            post_body,
             response: val
         }
         props.onSubmit(postData);
@@ -34,11 +29,10 @@ function CreatePost(props) {
   return (
       <div className='createPost flex justify-center items-center' style={{width: "100vw", height: "100vh"}}>
         <div className="cr_bd w-4/12 mx-auto shadow-2xl flex flex-col justify-center items-center p-8 gap-8 md:w-8/12 sm:w-11/12">
-                {/* <ImageUploader
+                <ImageUploader
                     onFileAdded={(img) => getImageFileObject(img)}
                     onFileRemoved={(img) => runAfterImageDelete(img)}
-                /> */}
-                <FileBase type="file" multiple={false} name="file" onDone={({base64})=>{setPost_img(base64)}}/>
+                />
                 <form action="" className='flex flex-col w-full' onSubmit={createPost}>
                     <textarea className='border-b-2 w-full' name="" id="" cols="20" placeholder='Write something!!' onChange={(event) => setPost_body(event.target.value)}></textarea>
                     <div className='flex gap-8 justify-center mt-4 mb-2'>

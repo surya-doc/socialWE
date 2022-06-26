@@ -4,7 +4,6 @@ import ImageUploader from 'react-image-upload';
 import 'react-image-upload/dist/index.css';
 import Header from '../Header/Header';
 import './Profile.css';
-import FileBase from "react-file-base64";
 
 function EditProfile() {
     const[i, setI] = useState();
@@ -18,17 +17,16 @@ function EditProfile() {
     const[relation, setRelation] = useState();
     const[interested, setInterested] = useState();
     // const[i, setI] = useState();
-    // function getImageFileObject(imageFile) {
-    //     var a = imageFile.file;
-    //     console.log(JSON.stringify(a));
-    //     setI(JSON.stringify("*", a));
-    // }
-    // function runAfterImageDelete(file) {
-    //     console.log({ file })
-    // }
+    function getImageFileObject(imageFile) {
+        var a = imageFile.dataUrl;
+        console.log(imageFile);
+        setI(a);
+    }
+    function runAfterImageDelete(file) {
+        console.log({ file })
+    }
 
     async function getUsersData(ele){
-        console.log("*********************************************************************************************", i);
         ele.preventDefault();
         const user_data = localStorage.getItem('user') ?
               JSON.parse(localStorage.getItem('user')) : 
@@ -48,7 +46,7 @@ function EditProfile() {
             userId: user_data.id
         }
         console.log(user);
-        const user_rsponse = await axios.post('http://localhost:5000/editprofile', {user});
+        const user_rsponse = await axios.post('http://localhost:5000/profile', {user});
         console.log(user_rsponse);
     }
 
@@ -58,7 +56,10 @@ function EditProfile() {
             <div className='edit_profile py-8'>
             <div className="a flex flex-col justify-center rounded-md items-center w-2/4 mx-auto py-2 lg:w-11/12" style={{backgroundColor: "#FFF"}}>
                     <div className='py-4 lg:py-0'>
-                        <FileBase type="file" multiple={false} name="file" onDone={({base64})=>{setI(base64)}}/>
+                        <ImageUploader
+                            onFileAdded={(img) => getImageFileObject(img)}
+                            onFileRemoved={(img) => runAfterImageDelete(img)}
+                        />
                         <p className='py-2 text-lg font-thin'>Change profile photo</p>
                     </div>
                     <div className="form w-4/5 flex justify-center align-middle md:w-full md:justify-center">

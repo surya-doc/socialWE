@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function Friends() {
@@ -21,15 +20,6 @@ function Friends() {
         }
     ])
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     const getFriends = async() => {
-    //         const user_data = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
-    //         // setFriends(user_data.id);
-    //         const tot = await axios.post('http://localhost:5000/allies', {userId: user_data.id});
-    //         setFriends(tot);
-    //     }
-    //     getFriends();
-    // })
   return (
       <div>
         <div className='friends flex w-2/5 justify-between mx-auto md:w-3/5 sm:w-4/5 sm:gap-2'>
